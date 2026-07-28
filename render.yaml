@@ -1,7 +1,6 @@
 services:
-  - type: web
-    name: triptocoin-rewards
-    env: static
+  - type: static
+    name: triptocoin-foundation
     buildCommand: npm run build
     staticPublishPath: ./dist
     routes:
