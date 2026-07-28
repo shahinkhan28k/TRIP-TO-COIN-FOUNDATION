@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "users": {
+      "title": "users",
+      "description": "User profiles for TripToCoin platform",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "telegram": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "twitter": { "type": "string" },
+        "wallet": { "type": "string" },
+        "country": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "submissions": {
+      "title": "submissions",
+      "description": "Promotional post submissions for TripToCoin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "uid": { "type": "string" },
+        "projectName": { "type": "string" },
+        "tweetUrl": { "type": "string" },
+        "likes": { "type": "number" },
+        "replies": { "type": "number" },
+        "reposts": { "type": "number" },
+        "bookmarks": { "type": "number" },
+        "views": { "type": "number" },
+        "status": { "type": "string" },
+        "rewardAmount": { "type": "number" },
+        "paymentStatus": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "note": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "userFullName": { "type": "string" }
+      },
+      "required": ["uid", "tweetUrl", "status"]
+    },
+    "payments": {
+      "title": "payments",
+      "description": "Reward payments recorded for users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "uid": { "type": "string" },
+        "submissionId": { "type": "string" },
+        "amount": { "type": "number" },
+        "wallet": { "type": "string" },
+        "txHash": { "type": "string" },
+        "paymentDate": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "userEmail": { "type": "string" }
+      },
+      "required": ["uid", "amount", "wallet", "txHash"]
+    }
+  },
+  "securityRules": [
+    {
+      "collection": "users",
+      "rules": {
+        "read": "request.auth != null",
+        "write": "request.auth != null"
+      }
+    },
+    {
+      "collection": "submissions",
+      "rules": {
+        "read": "request.auth != null",
+        "write": "request.auth != null"
+      }
+    },
+    {
+      "collection": "payments",
+      "rules": {
+        "read": "request.auth != null",
+        "write": "request.auth != null"
+      }
+    }
+  ]
+}

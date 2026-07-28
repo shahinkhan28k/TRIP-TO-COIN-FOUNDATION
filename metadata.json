@@ -1,0 +1,6 @@
+{
+  "name": "TripToCoin Promotion & Rewards Platform",
+  "description": "A modern platform to submit promotional posts on X (Twitter) for TripToCoin and earn rewards upon admin approval.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
