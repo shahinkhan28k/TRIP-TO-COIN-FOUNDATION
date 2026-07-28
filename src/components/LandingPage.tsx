@@ -12,6 +12,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { PromotionTargetBanners } from './PromotionTargetBanners';
 
 export const LandingPage: React.FC = () => {
   const { signInWithGoogle, loading, settings } = useAuth();
@@ -87,6 +88,11 @@ export const LandingPage: React.FC = () => {
               <span>Get Started with Google</span>
               <ArrowRight className="w-5 h-5 ml-1" />
             </button>
+          </div>
+
+          {/* Reward Highlights Banner Grid */}
+          <div className="mt-16 max-w-6xl mx-auto">
+            <PromotionTargetBanners />
           </div>
         </div>
       </section>

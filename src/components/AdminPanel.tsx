@@ -912,7 +912,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <div>
-                  <h2 className="text-base font-bold tracking-tight">Admin Access & Role Management (এডমিন সেকশন)</h2>
+                  <h2 className="text-base font-bold tracking-tight">Admin Access & Role Management</h2>
                   <p className="text-xs text-slate-400">
                     Set new Gmail accounts as Administrator. Once set, they will have full Admin Panel access.
                   </p>
@@ -1405,6 +1405,60 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
               className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs"
             >
               {savingSettings ? 'Saving...' : 'Save Reward Rate Settings'}
+            </button>
+          </div>
+
+          {/* Banner Promo Targets */}
+          <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs space-y-4">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-blue-500" />
+              <span>Landing Page Promo Banners</span>
+            </h2>
+            <p className="text-[11px] text-slate-500">
+              Set the targets shown on the home page banners. These values will be multiplied by the current rates to show potential earnings.
+            </p>
+
+            <div className="space-y-3 text-xs">
+              <div>
+                <label className="block font-semibold mb-1">Banner View Target</label>
+                <input
+                  type="number"
+                  value={settings.heroBannerViews ?? 100000}
+                  onChange={(e) => setSettings({ ...settings, heroBannerViews: Number(e.target.value) })}
+                  className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
+                  placeholder="e.g. 100000"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1">Banner Like Target</label>
+                <input
+                  type="number"
+                  value={settings.heroBannerLikes ?? 100000}
+                  onChange={(e) => setSettings({ ...settings, heroBannerLikes: Number(e.target.value) })}
+                  className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
+                  placeholder="e.g. 100000"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1">Banner Repost Target</label>
+                <input
+                  type="number"
+                  value={settings.heroBannerReposts ?? 100000}
+                  onChange={(e) => setSettings({ ...settings, heroBannerReposts: Number(e.target.value) })}
+                  className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
+                  placeholder="e.g. 100000"
+                />
+              </div>
+            </div>
+
+            <button
+              onClick={handleSaveSettings}
+              disabled={savingSettings}
+              className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs"
+            >
+              {savingSettings ? 'Saving...' : 'Save Banner Targets'}
             </button>
           </div>
 

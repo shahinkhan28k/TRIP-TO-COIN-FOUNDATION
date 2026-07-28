@@ -67,6 +67,9 @@ export interface SystemSettings {
   announcementBanner: string;
   supportTelegram: string;
   officialTwitterAccount?: string; // e.g. "https://x.com/TripToCoin" or "@TripToCoin"
+  heroBannerViews?: number;
+  heroBannerLikes?: number;
+  heroBannerReposts?: number;
 }
 
 export type NavigationTab = 

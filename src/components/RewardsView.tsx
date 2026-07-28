@@ -4,6 +4,7 @@ import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { useAuth } from '../context/AuthContext';
 import { Submission, PaymentRecord, NavigationTab } from '../types';
+import { PromotionTargetBanners } from './PromotionTargetBanners';
 
 interface RewardsViewProps {
   onSelectTab: (tab: NavigationTab) => void;
@@ -68,7 +69,10 @@ export const RewardsView: React.FC<RewardsViewProps> = ({ onSelectTab }) => {
   const pendingPayout = Math.max(0, totalRewards - totalPaid);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* Promotion Target Banners */}
+      <PromotionTargetBanners />
+
       {/* Top Banner */}
       <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-700 text-white rounded-2xl p-6 sm:p-8 shadow-lg">
         <div className="flex items-center space-x-3 mb-2">

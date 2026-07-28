@@ -11,7 +11,10 @@ import {
   Sparkles,
   Coins,
   ArrowRight,
-  Wallet
+  Wallet,
+  Eye,
+  ThumbsUp,
+  Repeat
 } from 'lucide-react';
 import { collection, query, where, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
@@ -19,12 +22,14 @@ import { useAuth } from '../context/AuthContext';
 import { Submission, PaymentRecord, NavigationTab } from '../types';
 import { WithdrawalModal } from './WithdrawalModal';
 
+import { PromotionTargetBanners } from './PromotionTargetBanners';
+
 interface DashboardViewProps {
   onSelectTab: (tab: NavigationTab) => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({ onSelectTab }) => {
-  const { user, userProfile } = useAuth();
+  const { user, userProfile, settings } = useAuth();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [payments, setPayments] = useState<PaymentRecord[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -225,6 +230,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ onSelectTab }) => 
           </div>
         </div>
       </div>
+
+      {/* Promotion Target Banners */}
+      <PromotionTargetBanners />
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

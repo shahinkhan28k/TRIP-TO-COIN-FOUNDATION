@@ -31,7 +31,10 @@ const defaultSettings: SystemSettings = {
   maintenanceMode: false,
   announcementBanner: 'Welcome to TripToCoin Rewards! Earn USDT for promoting our token on X.',
   supportTelegram: '@triptocoin_support',
-  officialTwitterAccount: 'https://x.com/TripToCoin'
+  officialTwitterAccount: 'https://x.com/TripToCoin',
+  heroBannerViews: 100000,
+  heroBannerLikes: 100000,
+  heroBannerReposts: 100000
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

@@ -5,6 +5,7 @@ import { db } from '../lib/firebase';
 import { useAuth } from '../context/AuthContext';
 import { NavigationTab, SystemSettings } from '../types';
 import { fetchTweetMetrics } from '../lib/twitter';
+import { PromotionTargetBanners } from './PromotionTargetBanners';
 
 interface SubmitPromotionViewProps {
   onSelectTab: (tab: NavigationTab) => void;
@@ -206,7 +207,10 @@ export const SubmitPromotionView: React.FC<SubmitPromotionViewProps> = ({ onSele
   const officialLink = settings.officialTwitterAccount || 'https://x.com/TripToCoin';
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-8">
+      {/* Promotion Target Banners */}
+      <PromotionTargetBanners />
+
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -388,7 +392,7 @@ export const SubmitPromotionView: React.FC<SubmitPromotionViewProps> = ({ onSele
                   {aiMetrics.officialMentioned && (
                     <span className="text-[11px] text-indigo-600 font-bold bg-indigo-50/90 px-2 py-0.5 rounded-md border border-indigo-100 flex items-center gap-1">
                       <Edit3 className="w-3 h-3 text-indigo-500" />
-                      ম্যানুয়ালি Views, Likes, Reposts টাইপ করুন (Calculated Reward অটোমেটিক হিসাব হবে)
+                      Type Views, Likes, and Reposts manually (Calculated Reward will update automatically)
                     </span>
                   )}
                 </div>
