@@ -107,7 +107,7 @@ export const ProfileView: React.FC = () => {
                 type="text"
                 name="fullName"
                 required
-                value={formData.fullName}
+                value={formData.fullName || ''}
                 onChange={handleChange}
                 placeholder="John Doe"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
@@ -126,7 +126,7 @@ export const ProfileView: React.FC = () => {
                 type="email"
                 name="email"
                 readOnly
-                value={formData.email}
+                value={formData.email || ''}
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-100 border border-slate-200 rounded-xl text-sm font-medium text-slate-500 cursor-not-allowed"
               />
             </div>
@@ -143,7 +143,7 @@ export const ProfileView: React.FC = () => {
               <input
                 type="text"
                 name="telegram"
-                value={formData.telegram}
+                value={formData.telegram || ''}
                 onChange={handleChange}
                 placeholder="@username"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
@@ -161,7 +161,7 @@ export const ProfileView: React.FC = () => {
               <input
                 type="text"
                 name="whatsapp"
-                value={formData.whatsapp}
+                value={formData.whatsapp || ''}
                 onChange={handleChange}
                 placeholder="+1 234 567 890"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
@@ -179,7 +179,7 @@ export const ProfileView: React.FC = () => {
               <input
                 type="text"
                 name="twitter"
-                value={formData.twitter}
+                value={formData.twitter || ''}
                 onChange={handleChange}
                 placeholder="@my_twitter_handle"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
@@ -196,7 +196,7 @@ export const ProfileView: React.FC = () => {
               <Globe className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
               <select
                 name="country"
-                value={formData.country}
+                value={formData.country || ''}
                 onChange={handleChange}
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all appearance-none"
               >
@@ -234,7 +234,7 @@ export const ProfileView: React.FC = () => {
                   type="text"
                   name="walletBep20"
                   required
-                  value={formData.walletBep20}
+                  value={formData.walletBep20 || ''}
                   onChange={(e) => {
                     const val = e.target.value;
                     setFormData(prev => ({ ...prev, walletBep20: val, wallet: val }));
@@ -257,7 +257,7 @@ export const ProfileView: React.FC = () => {
                   type="text"
                   name="walletArb"
                   required
-                  value={formData.walletArb}
+                  value={formData.walletArb || ''}
                   onChange={handleChange}
                   placeholder="0x..."
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"

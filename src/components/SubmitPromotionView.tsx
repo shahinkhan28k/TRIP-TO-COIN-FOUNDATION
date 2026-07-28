@@ -38,8 +38,8 @@ export const SubmitPromotionView: React.FC<SubmitPromotionViewProps> = ({ onSele
   // Settings for rate multipliers
   const [settings, setSettings] = useState<SystemSettings>({
     minPayoutUsd: 10,
-    rewardPerThousandViews: 2.0,
-    rewardPerThousandLikes: 5.0,
+    rewardPerView: 0.002,
+    rewardPerLike: 0.005,
     rewardPerRepost: 0.5,
     usdtBep20Contract: '',
     usdtArbContract: '',
@@ -68,8 +68,8 @@ export const SubmitPromotionView: React.FC<SubmitPromotionViewProps> = ({ onSele
   // Recalculate reward dynamically when user modifies engagement metrics
   const calculateReward = (views: number, likes: number, reposts: number, officialMentioned: boolean = true) => {
     if (!officialMentioned) return 0;
-    const vReward = (views / 1000) * (settings.rewardPerThousandViews || 2.0);
-    const lReward = (likes / 1000) * (settings.rewardPerThousandLikes || 5.0);
+    const vReward = views * (settings.rewardPerView || 0.002);
+    const lReward = likes * (settings.rewardPerLike || 0.005);
     const rReward = reposts * (settings.rewardPerRepost || 0.5);
     const total = vReward + lReward + rReward;
     if (total <= 0) return 0;
@@ -287,9 +287,11 @@ export const SubmitPromotionView: React.FC<SubmitPromotionViewProps> = ({ onSele
               <label className="block text-xs font-semibold text-slate-700">
                 X (Twitter) Post URL *
               </label>
-              <span className="text-[11px] text-slate-400 font-medium">
-                Must mention @TripToCoin or #TripToCoin
-              </span>
+              <div className="flex items-center gap-2 text-[10px] font-bold">
+                 <span className="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">View: ${settings.rewardPerView}</span>
+                 <span className="text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">Like: ${settings.rewardPerLike}</span>
+                 <span className="text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">Repost: ${settings.rewardPerRepost}</span>
+              </div>
             </div>
             <div className="relative">
               <Link2 className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
@@ -401,7 +403,7 @@ export const SubmitPromotionView: React.FC<SubmitPromotionViewProps> = ({ onSele
                       type="number"
                       min={0}
                       readOnly={!aiMetrics.officialMentioned}
-                      value={aiMetrics.views}
+                      value={aiMetrics.views ?? 0}
                       onChange={(e) => handleMetricChange('views', Number(e.target.value))}
                       className="w-full text-center font-extrabold text-slate-900 text-sm bg-slate-50 border border-slate-200 rounded-lg py-1 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
@@ -416,7 +418,7 @@ export const SubmitPromotionView: React.FC<SubmitPromotionViewProps> = ({ onSele
                       type="number"
                       min={0}
                       readOnly={!aiMetrics.officialMentioned}
-                      value={aiMetrics.likes}
+                      value={aiMetrics.likes ?? 0}
                       onChange={(e) => handleMetricChange('likes', Number(e.target.value))}
                       className="w-full text-center font-extrabold text-slate-900 text-sm bg-slate-50 border border-slate-200 rounded-lg py-1 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
@@ -431,7 +433,7 @@ export const SubmitPromotionView: React.FC<SubmitPromotionViewProps> = ({ onSele
                       type="number"
                       min={0}
                       readOnly={!aiMetrics.officialMentioned}
-                      value={aiMetrics.reposts}
+                      value={aiMetrics.reposts ?? 0}
                       onChange={(e) => handleMetricChange('reposts', Number(e.target.value))}
                       className="w-full text-center font-extrabold text-slate-900 text-sm bg-slate-50 border border-slate-200 rounded-lg py-1 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />

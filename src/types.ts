@@ -58,8 +58,8 @@ export interface PaymentRecord {
 export interface SystemSettings {
   siteLogoUrl?: string; // Custom logo image URL
   minPayoutUsd: number;
-  rewardPerThousandViews: number;
-  rewardPerThousandLikes: number;
+  rewardPerView: number;
+  rewardPerLike: number;
   rewardPerRepost: number;
   usdtBep20Contract: string;
   usdtArbContract: string;

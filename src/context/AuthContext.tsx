@@ -23,8 +23,8 @@ interface AuthContextType {
 const defaultSettings: SystemSettings = {
   siteLogoUrl: '',
   minPayoutUsd: 10,
-  rewardPerThousandViews: 2.0,
-  rewardPerThousandLikes: 5.0,
+  rewardPerView: 0.002,
+  rewardPerLike: 0.005,
   rewardPerRepost: 0.5,
   usdtBep20Contract: '0x55d398326f99059fF775485246999027B3197955',
   usdtArbContract: '0xFd086bC7cd5C481DCC9C85ebE478A1C0b69FCbb9',

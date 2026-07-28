@@ -73,8 +73,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
   const [settings, setSettings] = useState<SystemSettings>({
     siteLogoUrl: '',
     minPayoutUsd: 10,
-    rewardPerThousandViews: 2.0,
-    rewardPerThousandLikes: 5.0,
+    rewardPerView: 0.002,
+    rewardPerLike: 0.005,
     rewardPerRepost: 0.5,
     usdtBep20Contract: '0x55d398326f99059fF775485246999027B3197955',
     usdtArbContract: '0xFd086bC7cd5C481DCC9C85ebE478A1C0b69FCbb9',
@@ -478,8 +478,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
     try {
       const details = await fetchTweetMetrics(manualSub.tweetUrl, settings.officialTwitterAccount || 'TripToCoin');
       
-      const vReward = (details.views / 1000) * (settings.rewardPerThousandViews || 2.0);
-      const lReward = (details.likes / 1000) * (settings.rewardPerThousandLikes || 5.0);
+      const vReward = details.views * (settings.rewardPerView || 0.002);
+      const lReward = details.likes * (settings.rewardPerLike || 0.005);
       const rReward = details.reposts * (settings.rewardPerRepost || 0.5);
       const calculatedReward = Math.max(1.0, Math.round((vReward + lReward + rReward) * 100) / 100);
 
@@ -1356,33 +1356,33 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
 
             <div className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold mb-1">Rate per 1,000 Views ($ USD)</label>
+                <label className="block font-semibold mb-1">Rate per 1 View ($ USD)</label>
                 <input
-                  type="number"
-                  step="0.1"
-                  value={settings.rewardPerThousandViews}
-                  onChange={(e) => setSettings({ ...settings, rewardPerThousandViews: Number(e.target.value) })}
-                  className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
+                   type="number"
+                   step="0.0001"
+                   value={settings.rewardPerView ?? 0}
+                   onChange={(e) => setSettings({ ...settings, rewardPerView: Number(e.target.value) })}
+                   className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1">Rate per 1,000 Likes ($ USD)</label>
+                <label className="block font-semibold mb-1">Rate per 1 Like ($ USD)</label>
                 <input
-                  type="number"
-                  step="0.1"
-                  value={settings.rewardPerThousandLikes}
-                  onChange={(e) => setSettings({ ...settings, rewardPerThousandLikes: Number(e.target.value) })}
-                  className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
+                   type="number"
+                   step="0.001"
+                   value={settings.rewardPerLike ?? 0}
+                   onChange={(e) => setSettings({ ...settings, rewardPerLike: Number(e.target.value) })}
+                   className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1">Rate per Repost ($ USD)</label>
+                <label className="block font-semibold mb-1">Rate per 1 Repost ($ USD)</label>
                 <input
                   type="number"
-                  step="0.05"
-                  value={settings.rewardPerRepost}
+                  step="0.01"
+                  value={settings.rewardPerRepost ?? 0}
                   onChange={(e) => setSettings({ ...settings, rewardPerRepost: Number(e.target.value) })}
                   className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
                 />
@@ -1392,7 +1392,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
                 <label className="block font-semibold mb-1">Minimum Payout Limit ($ USD)</label>
                 <input
                   type="number"
-                  value={settings.minPayoutUsd}
+                  value={settings.minPayoutUsd ?? 0}
                   onChange={(e) => setSettings({ ...settings, minPayoutUsd: Number(e.target.value) })}
                   className="w-full p-2.5 border border-slate-200 rounded-xl font-bold"
                 />
@@ -1568,62 +1568,62 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
               </div>
             </div>
 
-            <div>
-              <label className="block font-semibold mb-1">Official Twitter / X Account URL *</label>
-              <input
-                type="text"
-                value={settings.officialTwitterAccount || 'https://x.com/TripToCoin'}
-                onChange={(e) => setSettings({ ...settings, officialTwitterAccount: e.target.value })}
-                className="w-full p-2.5 border border-blue-200 bg-blue-50/20 rounded-xl font-mono text-slate-900 font-bold"
-                placeholder="https://x.com/TripToCoin"
-              />
-              <p className="text-[11px] text-slate-400 mt-1">
-                Main platform Twitter account used for verifying promotional tweet mentions.
-              </p>
-            </div>
-
-            <div>
-              <label className="block font-semibold mb-1">USDT BEP-20 Token Contract Address</label>
-              <input
-                type="text"
-                value={settings.usdtBep20Contract}
-                onChange={(e) => setSettings({ ...settings, usdtBep20Contract: e.target.value })}
-                className="w-full p-2.5 border rounded-xl font-mono"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold mb-1">USDT ARB Token Contract Address</label>
-              <input
-                type="text"
-                value={settings.usdtArbContract}
-                onChange={(e) => setSettings({ ...settings, usdtArbContract: e.target.value })}
-                className="w-full p-2.5 border rounded-xl font-mono"
-              />
-            </div>
-
-            <div>
-              <label className="block font-semibold mb-1">Telegram Support Handle</label>
-              <input
-                type="text"
-                value={settings.supportTelegram}
-                onChange={(e) => setSettings({ ...settings, supportTelegram: e.target.value })}
-                className="w-full p-2.5 border rounded-xl"
-              />
-            </div>
-
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
               <div>
-                <span className="font-bold text-slate-900 block">Maintenance Mode</span>
-                <span className="text-[11px] text-slate-500">Temporarily pause new submissions for system upgrades</span>
+                <label className="block font-semibold mb-1">Official Twitter / X Account URL *</label>
+                <input
+                  type="text"
+                  value={settings.officialTwitterAccount || ''}
+                  onChange={(e) => setSettings({ ...settings, officialTwitterAccount: e.target.value })}
+                  className="w-full p-2.5 border border-blue-200 bg-blue-50/20 rounded-xl font-mono text-slate-900 font-bold"
+                  placeholder="https://x.com/TripToCoin"
+                />
+                <p className="text-[11px] text-slate-400 mt-1">
+                  Main platform Twitter account used for verifying promotional tweet mentions.
+                </p>
               </div>
-              <input
-                type="checkbox"
-                checked={settings.maintenanceMode}
-                onChange={(e) => setSettings({ ...settings, maintenanceMode: e.target.checked })}
-                className="w-5 h-5 accent-blue-600 rounded"
-              />
-            </div>
+
+              <div>
+                <label className="block font-semibold mb-1">USDT BEP-20 Token Contract Address</label>
+                <input
+                  type="text"
+                  value={settings.usdtBep20Contract || ''}
+                  onChange={(e) => setSettings({ ...settings, usdtBep20Contract: e.target.value })}
+                  className="w-full p-2.5 border rounded-xl font-mono"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1">USDT ARB Token Contract Address</label>
+                <input
+                  type="text"
+                  value={settings.usdtArbContract || ''}
+                  onChange={(e) => setSettings({ ...settings, usdtArbContract: e.target.value })}
+                  className="w-full p-2.5 border rounded-xl font-mono"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1">Telegram Support Handle</label>
+                <input
+                  type="text"
+                  value={settings.supportTelegram || ''}
+                  onChange={(e) => setSettings({ ...settings, supportTelegram: e.target.value })}
+                  className="w-full p-2.5 border rounded-xl"
+                />
+              </div>
+
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-slate-900 block">Maintenance Mode</span>
+                  <span className="text-[11px] text-slate-500">Temporarily pause new submissions for system upgrades</span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={settings.maintenanceMode || false}
+                  onChange={(e) => setSettings({ ...settings, maintenanceMode: e.target.checked })}
+                  className="w-5 h-5 accent-blue-600 rounded"
+                />
+              </div>
 
             <button
               onClick={handleSaveSettings}
@@ -1650,7 +1650,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
                   <label className="block font-semibold mb-1">Full Name</label>
                   <input
                     type="text"
-                    value={editingUser.fullName}
+                    value={editingUser.fullName || ''}
                     onChange={(e) => setEditingUser({ ...editingUser, fullName: e.target.value })}
                     className="w-full p-2.5 border rounded-xl"
                   />
@@ -1658,7 +1658,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
                 <div>
                   <label className="block font-semibold mb-1">Role</label>
                   <select
-                    value={editingUser.role}
+                    value={editingUser.role || 'user'}
                     onChange={(e) => setEditingUser({ ...editingUser, role: e.target.value as any })}
                     className="w-full p-2.5 border rounded-xl font-bold"
                   >
@@ -1672,7 +1672,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
                 <label className="block font-semibold mb-1">Email Address</label>
                 <input
                   type="email"
-                  value={editingUser.email}
+                  value={editingUser.email || ''}
                   onChange={(e) => setEditingUser({ ...editingUser, email: e.target.value })}
                   className="w-full p-2.5 border rounded-xl"
                 />
@@ -1796,7 +1796,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
                   <label className="block font-semibold mb-1">usdt BEP-20 Address</label>
                   <input
                     type="text"
-                    value={newUser.walletBep20}
+                    value={newUser.walletBep20 || ''}
                     onChange={(e) => setNewUser({ ...newUser, walletBep20: e.target.value })}
                     placeholder="0x..."
                     className="w-full p-2.5 border rounded-xl font-mono"
@@ -1806,7 +1806,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
                   <label className="block font-semibold mb-1">usdt arb Address</label>
                   <input
                     type="text"
-                    value={newUser.walletArb}
+                    value={newUser.walletArb || ''}
                     onChange={(e) => setNewUser({ ...newUser, walletArb: e.target.value })}
                     placeholder="0x..."
                     className="w-full p-2.5 border rounded-xl font-mono"
