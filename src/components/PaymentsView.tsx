@@ -64,6 +64,8 @@ export const PaymentsView: React.FC = () => {
         list.push({ id: doc.id, ...doc.data() } as Submission);
       });
       setSubmissions(list);
+    }, (err) => {
+      console.warn('Payments view submissions snapshot error:', err);
     });
 
     return () => {

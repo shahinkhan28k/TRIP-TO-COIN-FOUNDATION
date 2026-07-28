@@ -14,7 +14,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 
 export const LandingPage: React.FC = () => {
-  const { signInWithGoogle, demoSignIn, loading, settings } = useAuth();
+  const { signInWithGoogle, loading, settings } = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col selection:bg-blue-500 selection:text-white">
@@ -87,25 +87,6 @@ export const LandingPage: React.FC = () => {
               <span>Get Started with Google</span>
               <ArrowRight className="w-5 h-5 ml-1" />
             </button>
-          </div>
-
-          {/* Instant Access Options */}
-          <div className="mt-8 pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-center gap-3 text-xs text-slate-400">
-            <span>Quick Access Demo:</span>
-            <div className="flex gap-2">
-              <button
-                onClick={() => demoSignIn(false)}
-                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition-colors"
-              >
-                Sign In as Promoter
-              </button>
-              <button
-                onClick={() => demoSignIn(true)}
-                className="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 font-medium transition-colors"
-              >
-                Sign In as Admin
-              </button>
-            </div>
           </div>
         </div>
       </section>

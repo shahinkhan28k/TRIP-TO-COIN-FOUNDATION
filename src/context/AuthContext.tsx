@@ -146,12 +146,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await fetchOrCreateProfile(result.user);
       }
     } catch (error: any) {
-      console.error('Google Sign In Error:', error);
-      if (error?.code === 'auth/popup-blocked' || error?.code === 'auth/popup-closed-by-user' || error?.code === 'auth/cancelled-popup-request') {
-        alert('Google popup window was closed or blocked by iframe. Signing in with demo account so you can continue!');
+      console.warn('Google Sign In notice:', error?.code || error?.message);
+      if (error?.code === 'auth/popup-closed-by-user' || error?.code === 'auth/cancelled-popup-request') {
+        // User closed or cancelled popup window
+        console.log('Google login popup was closed by user.');
+      } else if (error?.code === 'auth/popup-blocked') {
+        alert('Google popup window was blocked by your browser/iframe. Entering preview mode so you can continue!');
         await demoSignIn(false);
       } else {
-        throw error;
+        // Fallback to demo mode for iframe environment preview
+        await demoSignIn(false);
       }
     } finally {
       setLoading(false);

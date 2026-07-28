@@ -34,6 +34,9 @@ export const RewardsView: React.FC<RewardsViewProps> = ({ onSelectTab }) => {
       });
       setApprovedSubmissions(list);
       setLoading(false);
+    }, (err) => {
+      console.warn('Rewards view submissions snapshot error:', err);
+      setLoading(false);
     });
 
     // Fetch payments
@@ -48,6 +51,8 @@ export const RewardsView: React.FC<RewardsViewProps> = ({ onSelectTab }) => {
         list.push({ id: doc.id, ...doc.data() } as PaymentRecord);
       });
       setPayments(list);
+    }, (err) => {
+      console.warn('Rewards view payments snapshot error:', err);
     });
 
     return () => {

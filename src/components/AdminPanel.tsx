@@ -170,6 +170,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
       list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       setSubmissions(list);
       setLoading(false);
+    }, (err) => {
+      console.warn('Submissions snapshot listener error:', err);
+      setLoading(false);
     });
 
     // Users Listener
@@ -179,6 +182,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
         list.push({ uid: doc.id, ...doc.data() } as UserProfile);
       });
       setUsers(list);
+    }, (err) => {
+      console.warn('Users snapshot listener error:', err);
     });
 
     // Payments Listener
@@ -189,6 +194,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExitAdmin }) => {
       });
       list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       setPayments(list);
+    }, (err) => {
+      console.warn('Payments snapshot listener error:', err);
     });
 
     // System Settings Fetch
