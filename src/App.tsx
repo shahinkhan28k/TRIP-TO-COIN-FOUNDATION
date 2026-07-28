@@ -24,10 +24,10 @@ function MainAppContent() {
   
   // URL Path Matching & Syncing
   const getTabFromPath = (): NavigationTab => {
-    const path = window.location.pathname.replace(/^\/+/, '');
+    const hash = window.location.hash.replace(/^#\//, '');
     const validTabs: NavigationTab[] = ['dashboard', 'profile', 'submit', 'history', 'rewards', 'payments', 'admin', 'settings'];
-    if (validTabs.includes(path as NavigationTab)) {
-      return path as NavigationTab;
+    if (validTabs.includes(hash as NavigationTab)) {
+      return hash as NavigationTab;
     }
     return 'dashboard';
   };
@@ -38,18 +38,18 @@ function MainAppContent() {
   // Sync state with URL path
   const handleSelectTab = (tab: NavigationTab) => {
     setCurrentTab(tab);
-    if (window.location.pathname !== `/${tab}`) {
-      window.history.pushState({}, '', `/${tab}`);
+    if (window.location.hash !== `#/${tab}`) {
+      window.location.hash = `#/${tab}`;
     }
   };
 
   // Listen for browser Back / Forward buttons
   useEffect(() => {
-    const handlePopState = () => {
+    const handleHashChange = () => {
       setCurrentTab(getTabFromPath());
     };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   if (loading) {
